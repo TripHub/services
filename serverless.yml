@@ -15,9 +15,9 @@ provider:
 
 vpc:
   securityGroupsId:
-    - sg-49ec3b23
+    - ${env:AWS_SECURITY_GROUP_ID}
   subnetIds:
-    - subnet-c3bb508f
+    - ${env:AWS_SUBNET_ID}
 
 functions:
   ping:
