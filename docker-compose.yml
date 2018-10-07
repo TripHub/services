@@ -7,7 +7,6 @@ services:
     build: .
     depends_on:
       - db
-    env_file: .env.dev.yml
-    command: sls invoke local -f ping
+    command: sls invoke local -f migrate
     volumes:
       - .:/usr/src/guide

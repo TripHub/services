@@ -9,11 +9,11 @@ provider:
   stage: ${opt:stage, 'dev'}
   profile: ${self:custom.AWS_PROFILE}
   environment:
-  - NODE_ENV: ${self:custom.NODE_ENV}
-  - DB_NAME: ${self:custom.DB_NAME}
-  - DB_USER: ${self:custom.DB_USER}
-  - DB_PASSWORD: ${self:custom.DB_PASSWORD}
-  - DB_HOST: ${self:custom.DB_HOST}
+    NODE_ENV: ${self:custom.NODE_ENV}
+    DB_NAME: ${self:custom.DB_NAME}
+    DB_USER: ${self:custom.DB_USER}
+    DB_PASSWORD: ${self:custom.DB_PASSWORD}
+    DB_HOST: ${self:custom.DB_HOST}
 
 custom: ${file(.env.${opt:stage, 'dev'}.yml)}
 
@@ -28,3 +28,8 @@ functions:
     handler: handler.ping
     events:
     - http: GET ping
+
+  migrate:
+    handler: handler.migrate
+    events:
+      - http: POST migrate
