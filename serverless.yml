@@ -2,27 +2,26 @@ service: travelbear
 
 frameworkVersion: ">=1.0.0 <2.0.0"
 
-#foo: ${file(./.env.${self:provider:stage}.yml)}
-custom: ${file(.env.dev.yml)}
-
 provider:
   name: aws
   runtime: nodejs8.10
   region: eu-west-2
-  profile: ${opt:profile, 'travelbear_sls'}
   stage: ${opt:stage, 'dev'}
+  profile: ${self:custom.AWS_PROFILE}
   environment:
-  - NODE_ENV: ${self:custom.NODE_ENV, 'development'}
+  - NODE_ENV: ${self:custom.NODE_ENV}
   - DB_NAME: ${self:custom.DB_NAME}
   - DB_USER: ${self:custom.DB_USER}
   - DB_PASSWORD: ${self:custom.DB_PASSWORD}
   - DB_HOST: ${self:custom.DB_HOST}
 
-#vpc:
-#  securityGroupsId:
-#    - ${self:custom.AWS_SECURITY_GROUP_ID}
-#  subnetIds:
-#    - ${self:custom.AWS_SUBNET_ID}
+custom: ${file(.env.${opt:stage, 'dev'}.yml)}
+
+vpc:
+  securityGroupsId:
+    - ${self:custom.AWS_SECURITY_GROUP_ID}
+  subnetIds:
+    - ${self:custom.AWS_SUBNET_ID}
 
 functions:
   ping:
