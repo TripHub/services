@@ -1,0 +1,26 @@
+service: travelbear
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'dev'}
+  region: eu-west-2
+  profile: travelbear_sls
+  environment:
+  - NODE_ENV: ${env:NODE_ENV, 'production'}
+  - DB_NAME: ${env:DB_NAME}
+  - DB_USER: ${env:DB_USER}
+  - DB_PASSWORD: ${env:DB_PASSWORD}
+  - DB_HOST: ${env:DB_HOST}
+
+vpc:
+  securityGroupsId:
+    - sg-49ec3b23
+  subnetIds:
+    - subnet-c3bb508f
+
+functions:
+  ping:
+    handler: handlers.ping
+    events:
+    - http: GET ping

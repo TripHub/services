@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:10
+  fns:
+    build: .
+    depends_on:
+      - db
+    env_file: .dev.env
+    command: sls invoke local -f ping
+    volumes:
+      - .:/usr/src/guide
